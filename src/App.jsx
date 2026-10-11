@@ -6,11 +6,11 @@ import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import ReservePage from "./pages/ReservePage";
 import NotFoundPage from "./pages/NotFoundPage";
+import Layout from "./components/layout/Layout";
 
 function App() {
 	return (
 		<AnnouncerProvider>
-			<Header />
 			<Routes>
 				<Route element={<Layout />} >
 					<Route index element={<HomePage />} />
@@ -19,7 +19,6 @@ function App() {
 					<Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>
-			<Footer />
 		</AnnouncerProvider>
 	);
 }

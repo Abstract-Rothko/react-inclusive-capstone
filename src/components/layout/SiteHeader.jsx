@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 
-export default function SiteHeader() {
+function SiteHeader() {
     return (
         <header className="site-header">
             <Link to="/" className="brand">
@@ -22,3 +22,5 @@ export default function SiteHeader() {
         </header>
     );
 }
+
+export default SiteHeader;
