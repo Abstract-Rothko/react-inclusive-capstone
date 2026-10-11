@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reserve Study Room: Kariega Community Library</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header class="site-header region-dark">
+		<div class="container">
+		<a class="site-name" href="index.html">Kariega Community Library</a>
+		<nav aria-label="Main">
+			<ul class="nav-list" role="list">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="search.html">Courses and archive</a></li>
+			<li><a href="reserve.html" aria-current="page">Reserve a room</a></li>
+			<li><a href="index.html#events">Events</a></li>
+			</ul>
+		</nav>
+		</div>
+	</header>
+	
+	<div class="container">
+		<div class="page-grid">
+
+		<main id="main-content">
+
+			<p class="wf-banner">Wireframe 3: Detail and booking form.</p>
+
+			<nav class="breadcrumb" aria-label="Breadcrumb"> <!-- Don't like this breacrumb className, change it -->
+			<ol>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="index.html">Study rooms</a></li>
+				<li><span aria-current="page">Study Room 2</span></li>
+			</ol>
+			</nav>
+
+			<h1>Reserve Study Room 2</h1>
+			<p>A quiet room on the second floor for up to six people.</p>
+
+			<section>
+			<h2>About this room</h2>
+
+			<dl class="meta-list">
+				<div><dt>Seats</dt><dd>Up to 6 people</dd></div>
+				<div><dt>Floor</dt><dd>2, reached by lift</dd></div>
+				<div><dt>Route</dt><dd>Step-free from the entrance</dd></div>
+				<div><dt>Hearing loop</dt><dd>Yes</dd></div>
+				<div><dt>Computer</dt><dd>Screen reader and magnifier installed</dd></div>
+				<div><dt>Booking limit</dt><dd>3 hours per day</dd></div>
+			</dl>
+			</section>
+
+			<section>
+			<h2>Your reservation</h2>
+
+			<!--
+				ERROR SUMMARY: SPECIFICATION FOR PART B (not rendered here).
+				When validation fails, the React form must show a summary box
+				directly above the form and move focus to it:
+
+				<div class="panel" role="alert" tabindex="-1" id="error-summary"
+					aria-labelledby="error-summary-title">
+					<h3 id="error-summary-title">There are 2 problems with your reservation</h3>
+					<ul>
+					<li><a href="#start-time">Choose a start time</a></li>
+					<li><a href="#email">Enter an email address, like name@example.com</a></li>
+					</ul>
+				</div>
+
+				...and each failing field gets BOTH:
+				aria-invalid="true"
+				aria-describedby="start-time-hint start-time-error"
+				where #start-time-error is a text message ("Error: choose a
+				start time") placed next to the field. Each summary link jumps
+				straight to its field.
+
+				WHY THIS PATTERN: errors shown only in red text are invisible to
+				screen reader users (persona pain point #8). Text + a heading +
+				programmatic focus + links to each field makes the error
+				findable, announced, and fixable. This wireframe reserves the
+				slot by structure (the form sits under an <h2>, with room for
+				the summary above it), without faking a failing state in static
+				HTML.
+			-->
+
+			<!--
+				FORM-LEVEL INSTRUCTION, before the first field, in plain text:
+				tells every user the "(required)" convention up front.
+
+				method="post": the form contains NAME and EMAIL. Personal data
+				must never be sent in a URL query string (it ends up in browser
+				history, server logs, and the Referer header). Hence POST, unlike
+				the search forms, which are safe as GET.
+			-->
+			<p>Fields marked <span class="required">(required)</span> must be completed.</p>
+
+			<form action="reserve.html" method="post">
+
+				<!-- ---------- Group 1: when ---------- -->
+				<!--
+				<fieldset>/<legend> is announced as "Reservation details,
+				group" when the user tabs into it, giving context to every
+				field inside it.
+				-->
+				<fieldset>
+				<legend>Reservation details</legend>
+
+				<div class="field">
+					<!--
+					The label text is followed by the "(required)" marker.
+					The marker span has aria-hidden="true" ON PURPOSE:
+					the native `required` attribute on the <input> already
+					makes NVDA say "required". If the marker text were also
+					read, the user would hear "required" twice. The visible
+					text remains for sighted users and is NOT colour-only
+					(it is the word itself).
+					Trade-off: the label's accessible name omits "(required)";
+					the state still reaches the user through the attribute.
+					-->
+					<label for="date">Date <span class="required" aria-hidden="true">(required)</span></label>
+
+					<!--
+					HINT, linked with aria-describedby. Announced order:
+					"Date, required, edit ... Choose a day up to 28 days
+					ahead. Format: day, month, year."
+
+					Why the hint is in the DOM BEFORE the input: the visual
+					order (label, hint, field) then matches the reading order.
+					-->
+					<p class="hint" id="date-hint">Choose a day up to 28 days ahead. The library is closed on Sundays.</p>
+
+					<!--
+					type="date": native control. TRADE-OFF (logged for the
+					README):
+						+ Free keyboard support, locale-correct, no custom ARIA.
+						- Rendering and screen-reader behaviour differ between
+						browsers; the mobile pickers are good, some desktop
+						ones are mediocre.
+					Alternative (rejected): a custom ARIA "date picker dialog".
+					It costs far more to build accessibly than the native
+					control does to tolerate, and most custom ones fail
+					keyboard testing. I'd rather ship the imperfect native
+					control and test it with real AT.
+
+					min/max are placeholders: in production they are set from
+					today's date, server-side.
+					-->
+					<input type="date" id="date" name="date" required
+						min="2026-10-09" max="2026-11-05"
+						aria-describedby="date-hint">
+				</div>
+
+				<div class="field">
+					<label for="start-time">Start time <span class="required" aria-hidden="true">(required)</span></label>
+					<p class="hint" id="start-time-hint">Rooms are available from 09:00. The last booking starts at 17:00.</p>
+
+					<!--
+					Native <select>: arrow keys move through options, typing
+					jumps to a match, every option is announced.
+
+					The first option is a real PROMPT with an empty value, so
+					`required` blocks submission until a time is chosen. It is
+					not `disabled`: a disabled option is unreachable by
+					keyboard and skipped by some screen readers.
+					-->
+					<select id="start-time" name="start-time" required aria-describedby="start-time-hint">
+					<option value="">Choose a start time</option>
+					<option value="09:00">09:00</option>
+					<option value="10:00">10:00</option>
+					<option value="11:00">11:00</option>
+					<option value="12:00">12:00</option>
+					<option value="13:00">13:00</option>
+					<option value="14:00">14:00</option>
+					<option value="15:00">15:00</option>
+					<option value="16:00">16:00</option>
+					<option value="17:00">17:00</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label for="duration">How long <span class="required" aria-hidden="true">(required)</span></label>
+					<p class="hint" id="duration-hint">Up to 3 hours per day.</p>
+					<select id="duration" name="duration" required aria-describedby="duration-hint">
+					<option value="">Choose a length</option>
+					<option value="60">1 hour</option>
+					<option value="120">2 hours</option>
+					<option value="180">3 hours</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label for="people">Number of people <span class="required" aria-hidden="true">(required)</span></label>
+					<p class="hint" id="people-hint">This room seats up to 6.</p>
+
+					<!--
+					A <select> of 1 to 6 rather than <input type="number">.
+					type="number" has spinner buttons that are awkward to
+					operate by keyboard, behaves inconsistently in screen
+					readers (arrow keys silently change the value, which is a
+					common accidental-edit bug), and invites out-of-range
+					entries. With a maximum of six, a <select> removes a whole
+					class of errors before they happen.
+					-->
+					<select id="people" name="people" required aria-describedby="people-hint">
+					<option value="">Choose a number</option>
+					<option value="1">1 person</option>
+					<option value="2">2 people</option>
+					<option value="3">3 people</option>
+					<option value="4">4 people</option>
+					<option value="5">5 people</option>
+					<option value="6">6 people</option>
+					</select>
+				</div>
+				</fieldset>
+
+				<!-- ---------- Group 2: needs ---------- -->
+				<fieldset>
+				<!--
+					OPTIONAL group, labelled as such in the legend. A checkbox
+					group (several can apply). The legend states the purpose so
+					nobody thinks they must tick something, and nobody is asked
+					to DISCLOSE a condition: the options are phrased as features
+					of the room, not as medical categories.
+				-->
+				<legend>Features you need (optional)</legend>
+				<div class="choice">
+					<input type="checkbox" id="need-loop" name="needs" value="hearing-loop">
+					<label for="need-loop">Hearing loop switched on</label>
+				</div>
+				<div class="choice">
+					<input type="checkbox" id="need-sr" name="needs" value="screen-reader-computer">
+					<label for="need-sr">Computer with screen reader set up</label>
+				</div>
+				<div class="choice">
+					<input type="checkbox" id="need-space" name="needs" value="extra-space">
+					<label for="need-space">Extra clear floor space</label>
+				</div>
+				</fieldset>
+
+				<!-- ---------- Group 3: contact ---------- -->
+				<fieldset>
+				<legend>Your details</legend>
+
+				<div class="field">
+					<label for="name">Full name <span class="required" aria-hidden="true">(required)</span></label>
+
+					<!--
+					autocomplete="name" (SC 1.3.5 Identify Input Purpose):
+					lets browsers, password managers, and AT autofill. That
+					helps people with motor impairments (less typing) and
+					cognitive or memory difficulties (less recall).
+					-->
+					<input type="text" id="name" name="name" required autocomplete="name">
+				</div>
+
+				<div class="field">
+					<label for="email">Email address <span class="required" aria-hidden="true">(required)</span></label>
+					<p class="hint" id="email-hint">We send your booking confirmation here. Example: name@example.com</p>
+
+					<!--
+					type="email" for the right on-screen keyboard on phones
+					and basic format validation. autocomplete="email" per
+					SC 1.3.5.
+					-->
+					<input type="email" id="email" name="email" required
+						autocomplete="email" aria-describedby="email-hint">
+				</div>
+
+				<div class="field">
+					<label for="phone">Phone number (optional)</label>
+					<p class="hint" id="phone-hint">Only used if we need to change your booking.</p>
+					<input type="tel" id="phone" name="phone"
+						autocomplete="tel" aria-describedby="phone-hint">
+				</div>
+				</fieldset>
+
+				<!--
+				SUBMIT: a <button>, labelled with the exact outcome ("Reserve
+				Study Room 2"), not "Submit". It is the LAST focusable control
+				in the form, so the Tab order is: fields in visual order, then
+				this button. The adjacent "Cancel" is a link back to the
+				search page: it navigates away, so it is a link, not a
+				button.
+				-->
+				<button class="button" type="submit">Reserve Study Room 2</button>
+				<a class="button button--secondary" href="search.html">Cancel and go back</a>
+
+			</form>
+			</section>
+
+		</main>
+
+		<aside aria-labelledby="alt-title">
+			<div class="panel">
+			<h2 id="alt-title">Prefer to book another way?</h2>
+			<p>You can reserve this room without using the form:</p>
+			<ul>
+				<li>Phone the front desk on <a href="tel:+27000000000">000&nbsp;000&nbsp;0000</a>.</li>
+				<li>Email <a href="mailto:rooms@example.org">rooms@example.org</a>.</li>
+				<li>Ask at the front desk. Staff can book for you.</li>
+			</ul>
+			<p>After you reserve, we send a confirmation email straight away. You can cancel up to 24 hours before your booking.</p>
+			</div>
+		</aside>
+
+		</div>
+	</div>
+
+	<footer class="site-footer region-dark">
+		<div class="container">
+		<nav aria-label="Footer">
+			<ul role="list">
+			<li><a href="#main-content">Back to top</a></li>
+			<li><a href="reserve.html">Accessibility statement</a></li>
+			<li><a href="reserve.html">Contact us</a></li>
+			</ul>
+		</nav>
+		<p class="meta">Open Monday to Saturday, 09:00 to 18:00. Closed Sundays and public holidays.</p>
+		</div>
+	</footer>
+
+</body>
+</html>

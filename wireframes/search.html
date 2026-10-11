@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Results for bookkeeping: Kariega Community Library</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header class="site-header region-dark">
+		<div class="container">
+		<a class="site-name" href="index.html">Kariega Community Library</a>
+		<nav aria-label="Main">
+			<ul class="nav-list" role="list">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="search.html" aria-current="page">Courses and archive</a></li>
+			<li><a href="reserve.html">Reserve a room</a></li>
+			<li><a href="index.html#events">Events</a></li>
+			</ul>
+		</nav>
+		</div>
+	</header>
+
+	<main id="main-content">
+		<div class="container">
+
+		<p class="wf-banner">Wireframe 2: Resource listing and search</p>
+
+		<h1>Courses and digital archive</h1>
+
+		<section>
+			<h2>Search and filter</h2>
+			<form role="search" action="search.html" method="get" aria-label="Search courses and archive">
+
+			<div class="field">
+				<label for="q">Search courses and archive</label>
+				<p class="hint" id="q-hint">Searches titles and descriptions.</p>
+				<input type="search" id="q" name="q" value="bookkeeping" aria-describedby="q-hint">
+			</div>
+			<p><a href="#results-title">Skip filters and go to results</a></p>
+			<details open>
+				<summary>Filter results</summary>
+				<fieldset>
+				<legend>Format</legend>
+				<div class="choice">
+					<input type="checkbox" id="fmt-course" name="format" value="course" checked>
+					<label for="fmt-course">Course</label>
+				</div>
+				<div class="choice">
+					<input type="checkbox" id="fmt-archive" name="format" value="archive" checked>
+					<label for="fmt-archive">Digital archive item</label>
+				</div>
+				<div class="choice">
+					<input type="checkbox" id="fmt-workshop" name="format" value="workshop">
+					<label for="fmt-workshop">Workshop recording</label>
+				</div>
+				</fieldset>
+
+				<fieldset>
+				<legend>Level</legend>
+				<div class="choice">
+					<input type="radio" id="lvl-any" name="level" value="any" checked>
+					<label for="lvl-any">Any level</label>
+				</div>
+				<div class="choice">
+					<input type="radio" id="lvl-beginner" name="level" value="beginner">
+					<label for="lvl-beginner">Beginner</label>
+				</div>
+				<div class="choice">
+					<input type="radio" id="lvl-intermediate" name="level" value="intermediate">
+					<label for="lvl-intermediate">Intermediate</label>
+				</div>
+				</fieldset>
+				<fieldset>
+				<legend>Accessibility</legend>
+				<div class="choice">
+					<!-- What is the story behind a11y-html id and class?? -->
+					<input type="checkbox" id="a11y-html" name="access" value="html">
+					<label for="a11y-html">Screen-reader-friendly text version available</label>
+				</div>
+				<div class="choice">
+					<input type="checkbox" id="a11y-audio" name="access" value="audio">
+					<label for="a11y-audio">Audio version available</label>
+				</div>
+				</fieldset>
+			</details>
+			<div class="field">
+				<label for="sort">Sort by</label>
+				<select id="sort" name="sort">
+				<option value="relevance" selected>Most relevant</option>
+				<option value="title">Title, A to Z</option>
+				<option value="newest">Newest first</option>
+				</select>
+			</div>
+
+			<!--
+				Two actions, clear hierarchy:
+				- Primary <button type="submit">   -> performs the filter
+				- Secondary link to the unfiltered page -> navigates
+				"Clear all filters" is a LINK (navigation to a clean URL), not a
+				<button type="reset">. A reset button only restores each field's
+				DEFAULT value, which here is the pre-filled "bookkeeping"
+				and checked boxes, so it would not clear anything.
+			-->
+			<button class="button" type="submit">Apply search and filters</button>
+			<a class="button button--secondary" href="search.html">Clear all filters</a>
+			</form>
+		</section>
+
+		<section>
+			<h2 id="results-title">Search results</h2>
+			<p id="results-count"><strong>Showing 1 to 4 of 12 results</strong> for "bookkeeping"</p>
+			<ul class="results" role="list">
+
+			<li>
+				<article class="card">
+				<h3><a href="reserve.html">Introduction to Bookkeeping</a></h3>
+				<p>A six-week evening course covering ledgers, invoices, and month-end checks. No experience needed.</p>
+				<dl class="meta-list">
+					<div><dt>Format</dt><dd>Course</dd></div>
+					<div><dt>Level</dt><dd>Beginner</dd></div>
+					<div><dt>Length</dt><dd>6 weeks</dd></div>
+					<div><dt>Accessible formats</dt><dd>Text, audio</dd></div>
+				</dl>
+				</article>
+			</li>
+
+			<li>
+				<article class="card">
+				<h3><a href="reserve.html">Spreadsheet Basics for Bookkeeping</a></h3>
+				<p>A recorded workshop on building a simple income and expense sheet, with a full text transcript.</p>
+				<dl class="meta-list">
+					<div><dt>Format</dt><dd>Workshop recording</dd></div>
+					<div><dt>Level</dt><dd>Beginner</dd></div>
+					<div><dt>Length</dt><dd>90 minutes</dd></div>
+					<div><dt>Accessible formats</dt><dd>Transcript, captions</dd></div>
+				</dl>
+				</article>
+			</li>
+
+			<li>
+				<article class="card">
+				<h3><a href="reserve.html">Small Business Records: A Practical Guide</a></h3>
+				<p>A downloadable guide to keeping tax-ready records for a very small business.</p>
+				<dl class="meta-list">
+					<div><dt>Format</dt><dd>Digital archive item</dd></div>
+					<div><dt>Level</dt><dd>Intermediate</dd></div>
+					<div><dt>Length</dt><dd>120 pages</dd></div>
+					<div><dt>Accessible formats</dt><dd>Text, EPUB, audio</dd></div>
+				</dl>
+				</article>
+			</li>
+
+			<li>
+				<article class="card">
+				<h3><a href="reserve.html">Bookkeeping Terms Explained</a></h3>
+				<p>A plain-language glossary of 80 common bookkeeping terms, with examples.</p>
+				<dl class="meta-list">
+					<div><dt>Format</dt><dd>Digital archive item</dd></div>
+					<div><dt>Level</dt><dd>Beginner</dd></div>
+					<div><dt>Length</dt><dd>14 pages</dd></div>
+					<div><dt>Accessible formats</dt><dd>Text</dd></div>
+				</dl>
+				</article>
+			</li>
+
+			</ul>
+			<nav class="pagination" aria-label="Search results pages">
+			<ol>
+				<li><a href="search.html" aria-label="Page 1" aria-current="page">1</a></li>
+				<li><a href="search.html" aria-label="Page 2">2</a></li>
+				<li><a href="search.html" aria-label="Page 3">3</a></li>
+				<li><a href="search.html">Next page</a></li>
+			</ol>
+			</nav>
+		</section>
+
+		</div>
+	</main>
+
+	<footer class="site-footer region-dark">
+		<div class="container">
+		<nav aria-label="Footer">
+			<ul role="list">
+			<li><a href="#main-content">Back to top</a></li>
+			<li><a href="reserve.html">Accessibility statement</a></li>
+			<li><a href="reserve.html">Contact us</a></li>
+			</ul>
+		</nav>
+		<p class="meta">Open Monday to Saturday, 09:00 to 18:00. Closed Sundays and public holidays.</p>
+		</div>
+	</footer>
+
+</body>
+</html>

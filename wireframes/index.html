@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Educate Yourself: Kariega Community Library</title>
+	<meta name="description" content="Search courses and the digital archive, reserve a study room, and register for events at Kariega Community Library.">
+	<link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+	<header class="site-header region-dark">
+		<section class="container">
+		<a class="site-name" href="index.html">Kariega Community Library</a>
+		<nav aria-label="Main">
+			<ul class="nav-list" role="list">
+				<li>
+					<a href="index.html" aria-current="page">Home</a>
+				</li>
+				<li>
+					<a href="search.html">Courses and archive</a>
+				</li>
+				<li>
+					<a href="reserve.html">Reserve a room</a>
+				</li>
+				<li>
+					<a href="#events">Events</a>
+				</li>
+			</ul>
+		</nav>
+
+		</section>
+	</header>
+
+	<main id="main-content">
+		<div class="container">
+		<p class="wf-banner">Wireframe 1: Landing and discovery.</p>
+
+		<section>
+			<h1>Educate Yourself at Kariega Community Library</h1>
+			<p>Search our courses and digital archive, reserve a quiet study room, or sign up for a workshop.</p>
+
+			<form role="search" action="search.html" method="get" aria-label="Search the library">
+			<div class="search-row">
+				<div class="field">
+				<label for="home-search">Search courses and archive</label>
+
+				<p class="hint" id="home-search-hint">Try a subject, like bookkeeping or digital skills.</p>
+				<input type="search" id="home-search" name="q" aria-describedby="home-search-hint">
+				</div>
+
+				<button class="button" type="submit">Search</button>
+			</div>
+			</form>
+		</section>
+
+		<section>
+			<h2>Browse by topic</h2>
+			<ul class="grid" role="list">
+				<li class="card">
+					<a href="search.html">Financial Skills</a>
+				</li>
+				<li class="card">
+					<a href="search.html">Digital skills</a>
+				</li>
+				<li class="card">
+					<a href="search.html">Distance Learning</a>
+				</li>
+				<li class="card">
+					<a href="search.html">Local History</a>
+				</li>
+				<li class="card">
+					<a href="search.html">Learn Languages</a>
+				</li>
+				<li class="card">
+					<a href="search.html">Careers and CV help</a>
+				</li>
+				<li class="card">
+					<a href="search.html">Research Papers</a>
+				</li>
+				<li class="card">
+					<a href="search.html">Religion</a>
+				</li>
+			</ul>
+		</section>
+
+		<section id="events">
+			<h2>Upcoming Events</h2>
+
+			<ul class="grid" role="list">
+			
+			<li>
+				<article class="card">
+				<h3>Introduction to Spreadsheets</h3>
+
+				<p class="meta">
+					<time datetime="2026-10-20T18:00">Tuesday 20 October 2026, 18:00</time>
+					to
+					<time datetime="2026-10-20T19:30">19:30</time>
+				</p>
+				<p>A free evening workshop for beginners. Laptops are available.</p>
+				<p><a href="reserve.html">Register for Introduction to Spreadsheets</a></p>
+				</article>
+			</li>
+
+			<li>
+				<article class="card">
+				<h3>Staying Safe Online: Learn the Basics</h3>
+				<p class="meta">
+					<time datetime="2026-10-22T11:00">Thursday 22 October 2026, 11:00</time>
+					to
+					<time datetime="2026-10-22T12:00">12:00</time>
+				</p>
+				<p>Learn to spot scam messages and set up good passwords. Screen reader demonstrations included.</p>
+				<p><a href="reserve.html">Register for Staying Safe Online</a></p>
+				</article>
+			</li>
+
+			<li>
+				<article class="card">
+				<h3>Local History Talk: Newspapers of the 1950s</h3>
+				<p class="meta">
+					<time datetime="2026-10-27T14:00">Tuesday 27 October 2026, 14:00</time>
+					to
+					<time datetime="2026-10-27T15:00">15:00</time>
+				</p>
+				<p>An introduction to the digitised newspaper archive, with time for questions.</p>
+				<p><a href="reserve.html">Register for the Local history talk</a></p>
+				</article>
+			</li>
+
+			</ul>
+		</section>
+
+		<section>
+			<h2>Reserve a study room</h2>
+			<p>Quiet rooms for one to six people. Book up to 28 days ahead, for up to three hours.</p>
+			<a class="button" href="reserve.html">Reserve a study room</a>
+		</section>
+
+		</div>
+	</main>
+
+	<aside aria-labelledby="a11y-title">
+		<div class="container">
+		<div class="panel">
+			<h2 id="a11y-title">Accessibility at the library</h2>
+			<ul>
+			<li>Step-free entrance and lift to every floor.</li>
+			<li>Hearing loop in every study room and the main hall.</li>
+			<li>Screen reader and magnifier software on all public computers.</li>
+			</ul>
+			<p>Need something else? <a href="reserve.html">Read about room features</a> or phone the front desk on <a href="tel:+27000000000">000&nbsp;000&nbsp;0000</a>.</p>
+		</div>
+		</div>
+	</aside>
+
+	<footer class="site-footer region-dark">
+		<div class="container">
+		<nav aria-label="Footer">
+			<ul role="list">
+			<li><a href="#main-content">Back to top</a></li>
+			<li><a href="reserve.html">Accessibility statement</a></li>
+			<li><a href="reserve.html">Contact us</a></li>
+			</ul>
+		</nav>
+		<p class="meta">Open Monday to Saturday, 09:00 to 18:00. Closed Sundays and public holidays.</p>
+		</div>
+	</footer>
+
+</body>
+</html>
