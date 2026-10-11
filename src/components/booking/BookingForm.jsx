@@ -1,98 +1,137 @@
-import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { validate } from "./validate";
-import FormField from "./FormField";
-import TimeSlotGroup from "./TimeSlotGroup";
-import ErrorSummary from "./ErrorSummary";
-import ConfirmDialog from "./ConfirmDialog";
+import { useState } from "react";
+import { accessFeatures, findRoom, rooms, timeSlotLabel, timeSlots, MAX_ADVANCE_DAYS } from "../../data/rooms";
+import { addDays, formatDate, toIsoDate } from "../../lib/dates";
+import { useAccessibleForm } from "../../hooks/useAccessibleForm";
+import FormField from "../forms/FormField";
+import RadioGroup from "../forms/RadioGroup";
+import CheckboxGroup from "../forms/CheckboxGroup";
+import ErrorSummary from "../forms/ErrorSummary";
+import ConfirmDialog from "../forms/ConfirmDialog";
+import { validateBooking } from "./validate";
 
-const empty = {
-    name: '',
-    email: '',
-    room: '',
-    date: '',
-    attendees: '1',
-    timeSlot: ''
-};
+const peopleOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 
-function BookingForm({headingRef}) {
+export default function BookingForm({ headingRef }) {
     const [params] = useSearchParams();
-    const [values, setValues] = useState({...empty, room: params.get('room') ?? ''});
-    const [touched, setTouched] = useState({});
-    const [attempt, setAttempt] = useState(0);
     const [confirmed, setConfirmed] = useState(null);
-    const summaryRef = useRef(null);
+    const today = new Date();
 
-    const errors = useMemo(() => validate(values), [values]);
-    const errorList = Object.entries(errors).map(([field, message]) => ({field, message}));
-    const show = f => (touched[f] || attempt > 0) ? errors[f] : undefined;
+    const form = useAccessibleForm({
+        initialValues: {
+            name: '',
+            email: '',
+            phone: '',
+            room: findRoom(params.get('room')) ? params.get('room') : '',
+            date: '',
+            attendees: '1',
+            timeSlot: '',
+            needs: [],
+            notes: ''
+        },
+        validate: validateBooking,
+        onValid: values => setConfirmed(values)
+    });
 
-    const onChange = (e) => setValues(v => ({...v, [e.target.name]: e.target.value}));
-    const onBlur = (e) => setTouched(t => ({...t, [e.target.name]: true}));
-
-    const onSubmit = e => {
-        e.preventDefault();
-        setAttempt(a => a + 1);
-        if (errorList.length === 0) setConfirmed(values);
-    };
-
-    useEffect(() => {
-        if(attempt > 0 && errorList.length > 0) summaryRef.current?.focus();
-    }, [attempt]);
+    const { values, fieldError, handleChange, handleBlur } = form;
+    const selectedRoom = findRoom(values.room);
+    const capacityHint = selectedRoom
+        ? `${selectedRoom.name} seats up to ${selectedRoom.capacity} people.`
+        : 'Choose a room first to see how many people it seats.';
 
     const closeDialog = () => {
-        setConfirmed(null); 
-        setValues(empty);
-        setTouched({});
-        setAttempt(0);
+        setConfirmed(null);
+        form.reset();
         headingRef.current?.focus();
     };
 
+    const confirmedRoom = confirmed ? findRoom(confirmed.room) : null;
+
     return (
         <>
-        {attempt > 0 && errorList.length > 0 && <ErrorSummary ref={summaryRef} errors={errorList} />}
-        <form noValidate onSubmit={onSubmit}>
-            <FormField 
-                id="name" label="Full name" required autoComplete="name" 
-                hint="As it appears on your library card."
-                value={values.name} onChange={onChange} onBlur={onBlur} error={show('name')} 
-            />
-            <FormField 
-                id="email" label="Email" type="email" required autoComplete="email"
-                hint="We'll send your confirmation here."
-                value={values.email} onChange={onChange} onBlur={onBlur} error={show('email')} 
-            />
-            <FormField 
-            id="room" label="Room" as="select" required
-            value={values.room} onChange={onChange} onBlur={onBlur} error={show('room')}>
-                <option value="">Select a room</option>
-                <option>Study Room A</option>
-                <option>Study Room B</option>
-                <option>Community Hall</option>
-            </FormField>
-            <FormField 
-                id="date" label="Date" type="date" required
-                hint="Choose today or a future date."
-                value={values.date} onChange={onChange} onBlur={onBlur} error={show('date')} 
-            />
-            <FormField 
-                id="attendees" label="Number of people" type="number" min="1" max="12" required
-                hint="betweenn 1 and 12."
-                value={values.attendees} onChange={onChange} onBlur={onBlur} error={show('attendees')} 
-            />
-            <TimeSlotGroup 
-                value={values.timeSlot} error={show('timeSlot')} onChange={onChange} onBlur={onBlur} 
-            />
-            <button type="submit">Reserve room</button>
-        </form>
+            {form.showSummary && <ErrorSummary ref={form.summaryRef} errors={form.errorList} subject="booking" />}
 
-        <ConfirmDialog open={!!confirmed} onClose={closeDialog}>
-            {confirmed && 
-            <p>{confirmed.room} on {confirmed.date}, {confirmed.timeSlot}, for {confirmed.attendees} A confirmation will go to {confirmed.email}</p>
-            }
-        </ConfirmDialog>
+            <p>Fields marked <span className="required">(required)</span> must be completed.</p>
+
+            <form noValidate onSubmit={form.handleSubmit}>
+                <fieldset>
+                    <legend>Reservation details</legend>
+
+                    <FormField
+                        id="room" label="Room" as="select" required
+                        value={values.room} onChange={handleChange} onBlur={handleBlur} error={fieldError('room')}
+                    >
+                        <option value="">Choose a room</option>
+                        {rooms.map(room => <option key={room.id} value={room.id}>{room.name}</option>)}
+                    </FormField>
+
+                    <FormField
+                        id="date" label="Date" type="date" required
+                        hint={`Choose a day from today up to ${MAX_ADVANCE_DAYS} days ahead. The library is closed on Sundays.`}
+                        min={toIsoDate(today)} max={toIsoDate(addDays(today, MAX_ADVANCE_DAYS))}
+                        value={values.date} onChange={handleChange} onBlur={handleBlur} error={fieldError('date')}
+                    />
+
+                    <RadioGroup
+                        name="timeSlot" legend="Time slot" required
+                        hint="Rooms are booked in two-hour blocks."
+                        options={timeSlots} value={values.timeSlot}
+                        onChange={handleChange} onBlur={handleBlur} error={fieldError('timeSlot')}
+                    />
+
+                    <FormField
+                        id="attendees" label="Number of people" as="select" required
+                        hint={capacityHint}
+                        value={values.attendees} onChange={handleChange} onBlur={handleBlur} error={fieldError('attendees')}
+                    >
+                        {peopleOptions.map(count => (
+                            <option key={count} value={count}>{count === 1 ? '1 person' : `${count} people`}</option>
+                        ))}
+                    </FormField>
+                </fieldset>
+
+                <CheckboxGroup
+                    name="needs" legend="Features you need"
+                    hint="Tick anything that applies. You do not need to explain why."
+                    options={accessFeatures} values={values.needs} onChange={handleChange}
+                />
+
+                <fieldset>
+                    <legend>Your details</legend>
+
+                    <FormField
+                        id="name" label="Full name" required autoComplete="name"
+                        hint="As it appears on your library card."
+                        value={values.name} onChange={handleChange} onBlur={handleBlur} error={fieldError('name')}
+                    />
+
+                    <FormField
+                        id="email" label="Email address" type="email" required autoComplete="email"
+                        hint="We send your booking confirmation here. Example: name@example.com"
+                        value={values.email} onChange={handleChange} onBlur={handleBlur} error={fieldError('email')}
+                    />
+
+                    <FormField
+                        id="phone" label="Phone number" type="tel" optional autoComplete="tel"
+                        hint="Only used if we need to change your booking."
+                        value={values.phone} onChange={handleChange} onBlur={handleBlur} error={fieldError('phone')}
+                    />
+                </fieldset>
+
+                <div className="actions">
+                    <button type="submit" className="button">Reserve room</button>
+                </div>
+            </form>
+
+            <ConfirmDialog open={Boolean(confirmed)} title="Booking confirmed" onClose={closeDialog}>
+                {confirmed && (
+                    <p>
+                        {confirmedRoom?.name} on {formatDate(confirmed.date)}, {timeSlotLabel(confirmed.timeSlot)},
+                        for {confirmed.attendees === '1' ? '1 person' : `${confirmed.attendees} people`}.
+                        A confirmation will be sent to {confirmed.email}.
+                    </p>
+                )}
+            </ConfirmDialog>
         </>
-    )
+    );
 }
-
-export default BookingForm;
