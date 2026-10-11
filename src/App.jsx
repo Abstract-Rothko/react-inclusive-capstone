@@ -1,11 +1,10 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import Home from "./pages/HomePage";
-import Bookings from "./pages/ReservePage";
-import Courses from "./pages/SearchPage";
-
+import HomePage from "./pages/HomePage";
+import SearchPage from "./pages/SearchPage";
+import ReservePage from "./pages/ReservePage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
 	return (
