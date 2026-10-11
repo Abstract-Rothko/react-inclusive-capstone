@@ -8,7 +8,7 @@ import RadioGroup from "../forms/RadioGroup";
 import CheckboxGroup from "../forms/CheckboxGroup";
 import ErrorSummary from "../forms/ErrorSummary";
 import ConfirmDialog from "../forms/ConfirmDialog";
-import { validateBooking } from "./validate";
+import { validateBooking } from "../events/validate";
 
 const peopleOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 
