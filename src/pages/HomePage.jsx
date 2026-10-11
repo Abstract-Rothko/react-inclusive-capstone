@@ -1,8 +1,7 @@
 import { categories } from "../data/coursesData";
 import { eventsData } from "../data/eventsData";
 
-const Home = () => {
-    
+const HomePage = () => {
     return (
     <main>
         <section className="header-details">
@@ -55,4 +54,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default HomePage;
