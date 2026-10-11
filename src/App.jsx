@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { AnnouncerProvider } from "./context/AnnouncerContext";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import HomePage from "./pages/HomePage";
@@ -8,17 +9,18 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
 	return (
-		<BrowserRouter>
+		<AnnouncerProvider>
 			<Header />
-
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/courses" element={<Courses />} />
-				<Route path="/bookings" element={<Bookings />} />
+				<Route element={<Layout />} >
+					<Route index element={<HomePage />} />
+					<Route path="search" element={<SearchPage />} />
+					<Route path="reserve" element={<ReservePage />} />
+					<Route path="*" element={<NotFoundPage />} />
+				</Route>
 			</Routes>
-
 			<Footer />
-		</BrowserRouter>
+		</AnnouncerProvider>
 	);
 }
 
