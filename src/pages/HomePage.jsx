@@ -1,4 +1,4 @@
-import { categories } from "../data/coursesData";
+import { categories } from "../data/resources";
 import { eventsData } from "../data/eventsData";
 
 const HomePage = () => {
