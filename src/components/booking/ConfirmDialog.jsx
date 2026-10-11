@@ -17,3 +17,5 @@ function ConfirmDialog({open, onClose, children}) {
         </dialog>
     );
 }
+
+export default ConfirmDialog;
