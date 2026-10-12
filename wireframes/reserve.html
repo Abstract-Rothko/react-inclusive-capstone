@@ -31,7 +31,7 @@
 
 			<p class="wf-banner">Wireframe 3: Detail and booking form.</p>
 
-			<nav class="breadcrumb" aria-label="Breadcrumb"> <!-- Don't like this breacrumb className, change it -->
+			<nav class="breadcrumb" aria-label="Breadcrumb">
 			<ol>
 				<li><a href="index.html">Home</a></li>
 				<li><a href="index.html">Study rooms</a></li>
@@ -57,46 +57,7 @@
 
 			<section>
 			<h2>Your reservation</h2>
-
-			<!--
-				ERROR SUMMARY: SPECIFICATION FOR PART B (not rendered here).
-				When validation fails, the React form must show a summary box
-				directly above the form and move focus to it:
-
-				<div class="panel" role="alert" tabindex="-1" id="error-summary"
-					aria-labelledby="error-summary-title">
-					<h3 id="error-summary-title">There are 2 problems with your reservation</h3>
-					<ul>
-					<li><a href="#start-time">Choose a start time</a></li>
-					<li><a href="#email">Enter an email address, like name@example.com</a></li>
-					</ul>
-				</div>
-
-				...and each failing field gets BOTH:
-				aria-invalid="true"
-				aria-describedby="start-time-hint start-time-error"
-				where #start-time-error is a text message ("Error: choose a
-				start time") placed next to the field. Each summary link jumps
-				straight to its field.
-
-				WHY THIS PATTERN: errors shown only in red text are invisible to
-				screen reader users (persona pain point #8). Text + a heading +
-				programmatic focus + links to each field makes the error
-				findable, announced, and fixable. This wireframe reserves the
-				slot by structure (the form sits under an <h2>, with room for
-				the summary above it), without faking a failing state in static
-				HTML.
-			-->
-
-			<!--
-				FORM-LEVEL INSTRUCTION, before the first field, in plain text:
-				tells every user the "(required)" convention up front.
-
-				method="post": the form contains NAME and EMAIL. Personal data
-				must never be sent in a URL query string (it ends up in browser
-				history, server logs, and the Referer header). Hence POST, unlike
-				the search forms, which are safe as GET.
-			-->
+			
 			<p>Fields marked <span class="required">(required)</span> must be completed.</p>
 
 			<form action="reserve.html" method="post">
