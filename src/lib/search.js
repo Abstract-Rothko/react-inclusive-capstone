@@ -10,7 +10,7 @@ export function filterCourses(courses, { query, categories, levels }) {
 }
 
 export function describeCount(shown, total) {
-    if (total === 0) return 'No resources match.';
+    if (total === 0) return 'No resources found.';
     const noun = total === 1 ? 'resource' : 'resources';
     return shown < total ? `Showing ${shown} of ${total} ${noun}.` : `Showing all ${total} ${noun}.`;
 }
