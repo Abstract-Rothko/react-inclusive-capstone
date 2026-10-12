@@ -126,7 +126,7 @@ that addresses it.
 
 > It is Tuesday evening. Onalerona has an assessment in nine days and her flat is noisy.
 >
-> She opens the library website in Firefox and her NVDA announces the page title: *"Riverside Community Library: Learn, borrow, and book."*
+> She opens the library website in Firefox and her NVDA announces the page title: *"Kariega Public Library: Learn, borrow, and book."*
 >
 > She presses `Tab` once and hears **"Skip to main content, link."** She presses `Enter`.
 >
