@@ -76,6 +76,7 @@ a {
     text-decoration: underline;
     text-underline-offset: 0.15em;
     text-decoration-thickness: 0.08em;
+    overflow-wrap: anywhere;
 }
 
 a:hover {
