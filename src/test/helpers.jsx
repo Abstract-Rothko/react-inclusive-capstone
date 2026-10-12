@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { axe } from 'jest-axe';
+import axe from 'axe-core';
 import App from '../App';
 
 export function renderApp(route = '/') {
@@ -14,7 +14,7 @@ export function renderApp(route = '/') {
     return { user, ...utils };
 }
 
-export const auditPage = () => axe(document.documentElement);
+export const auditPage = () => axe.run(document.documentElement);
 
 export const politeRegion = () => document.querySelector('output[aria-live="polite"]');
 export const assertiveRegion = () => document.querySelector('[role="alert"][aria-live="assertive"]');
