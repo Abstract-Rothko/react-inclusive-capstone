@@ -25,10 +25,6 @@
     top: var(--space-3);
 }
 
-time {
-    white-space: nowrap;
-}
-
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

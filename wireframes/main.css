@@ -515,10 +515,6 @@ details > fieldset:last-child {
 	font-weight: 700;
 }
 
-time { 
-	white-space: nowrap; 
-}
-
 .wf-banner {
 	border: 2px dashed var(--ink-muted);
 	background: var(--surface);
