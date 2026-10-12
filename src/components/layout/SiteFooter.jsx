@@ -1,69 +1,35 @@
 import { Link } from "react-router-dom";
+import { SITE } from "../../config/site";
 
-function SiteFooter() {
+export default function SiteFooter() {
     return (
-        <footer className="footer">
-            <div className="footer-container">
-                <nav className="site-links">
-                    <ul>
-                        <li>
-                            <Link to="/">
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/search">
-                                Courses
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/reserve">
-                                Reserve a Room
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div className="contact-details">
-                    <ul>
-                        <li>Email: </li>
-                        <li>Tel: </li>
-                        <li>Location: </li>
-                        <li>Countact Us</li>
-                    </ul>
+        <footer className="site-footer">
+            <div className="container">
+                <div className="site-footer__grid">
+                    <nav aria-label="Footer">
+                        <h2 className="site-footer__heading">Explore</h2>
+                        <ul role="list">
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/search">Courses and archive</Link></li>
+                            <li><Link to="/reserve">Reserve a room</Link></li>
+                            <li><Link to="/events">Events</Link></li>
+                            <li><Link to="/accessibility">Accessibility statement</Link></li>
+                        </ul>
+                    </nav>
+                    <div>
+                        <h2 className="site-footer__heading">Contact us</h2>
+                        <address>
+                            <p>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+                            <p>Phone: <a href={SITE.phoneHref}>{SITE.phoneDisplay}</a></p>
+                            <p>{SITE.address}</p>
+                        </address>
+                        <p className="meta">{SITE.hours}</p>
+                    </div>
                 </div>
-
-                <div className="additional-info">
-                    <ul>
-                        <li>
-                            <Link to="/">
-                                Copyright & Disclaimer
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/">
-                                Privacy Policy
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/">
-                                About Us
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/">
-                                Events
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div className="footer-copyright">
-                <p>Accessibility: WCAG 2.2 AA</p>
-                <p>2026 Kariega Public Library</p>
+                <p className="meta site-footer__legal">
+                    &copy; 2026 {SITE.name}. Built to {SITE.conformance}.
+                </p>
             </div>
         </footer>
     );
 }
-
-export default SiteFooter;
