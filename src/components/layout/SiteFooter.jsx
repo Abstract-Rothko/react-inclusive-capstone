@@ -27,7 +27,7 @@ export default function SiteFooter() {
                     </div>
                 </div>
                 <p className="meta site-footer__legal">
-                    &copy; 2026 {SITE.name}. Built to {SITE.conformance}.
+                    &copy; 2026 {SITE.name}. We aim to meet {SITE.conformance}.
                 </p>
             </div>
         </footer>
