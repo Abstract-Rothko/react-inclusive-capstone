@@ -64,7 +64,7 @@ describe('filterable resource listing', () => {
 
     it('moves focus to the first newly revealed result after "Show more"', async () => {
         const { user } = renderApp('/search');
-        const list = screen.getByRole('list', { name: '' , hidden: false });
+        const list = within(screen.getByRole('region', { name: /search results/i })).getByRole('list');
         const before = within(list).getAllByRole('listitem').length;
         expect(before).toBe(12);
 

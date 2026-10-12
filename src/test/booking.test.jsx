@@ -87,7 +87,7 @@ describe('booking form', () => {
         const { user } = renderApp('/reserve?room=study-room-1');
         await user.selectOptions(screen.getByLabelText(/number of people/i), '5');
         await user.tab();
-        expect(screen.getByText(/study room 1 seats up to 4 people/i)).toBeInTheDocument();
+        expect(screen.getByText(/choose 4 or fewer/i)).toBeInTheDocument();
     });
 
     it('prefills the room from the query string', () => {
