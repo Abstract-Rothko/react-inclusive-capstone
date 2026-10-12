@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import { auditPage, renderApp } from './helpers';
 
 const routes = [
-    ['/', 'Home'],
+    ['/', 'Search courses'],
     ['/search', 'Courses and archive'],
     ['/courses/1', 'Budgeting Basics'],
     ['/events', 'Events'],
