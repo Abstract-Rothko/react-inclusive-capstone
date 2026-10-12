@@ -55,3 +55,9 @@ Run on the production build (`npm run build && npm run preview`).
 ### Deviations from the wireframes
 
 <Room capacity, booking length and filter set differ from the wireframes. See "Wireframe drift" in the audit.>
+
+### Deviations from the wireframes
+
+- **Time slots.** The wireframe used a start time plus duration. The prototype uses four fixed two-hour blocks, which removes a whole class of invalid combinations (a start time with a duration that runs past closing) and gives screen-reader users one radio group instead of two dependent selects.
+- **Filters.** The wireframe filtered by format. The dataset has no format field, so the prototype filters by category and level.
+- **Capacity.** Room capacities follow `src/data/rooms.js` (4, 6 and 12), which is the source of truth.
