@@ -7,7 +7,7 @@ import { usePageHeading } from '../hooks/usePageHeading';
 import EventCard from '../components/events/EventCard';
 
 export default function HomePage() {
-    const headingRef = usePageHeading('Home');
+    const headingRef = usePageHeading('Search courses, reserve rooms, join events');
     const navigate = useNavigate();
     const [query, setQuery] = useState('');
 

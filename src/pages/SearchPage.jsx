@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { categories, coursesData } from '../data/resources';
 import { filterCourses, describeCount } from '../lib/search';
 import { usePageHeading } from '../hooks/usePageHeading';
-import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import { useAnnouncer } from '../hooks/useAnnouncer';
 import FilterAccordion from '../components/search/FilterAccordion';
 import ToggleGroup from '../components/search/ToggleGroup';
@@ -12,32 +11,75 @@ import ResultCard from '../components/search/ResultCard';
 const PAGE_SIZE = 12;
 const levels = ['Beginner', 'Intermediate'];
 
-const toggleItem = (list, item) => (list.includes(item) ? list.filter(entry => entry !== item) : [...list, item]);
+// const toggleItem = (list, item) => (list.includes(item) ? list.filter(entry => entry !== item) : [...list, item]);
 
 export default function SearchPage() {
     const headingRef = usePageHeading('Courses and archive');
     const announce = useAnnouncer();
-    const [params] = useSearchParams();
+    const [params, setParams] = useSearchParams();
     const searchRef = useRef(null);
     const resultsHeadingRef = useRef(null);
     const pendingFocus = useRef(null);
+    const writeTimer = useRef(null);
 
-    const [query, setQuery] = useState(params.get('q') ?? '');
-    const [selectedCategories, setSelectedCategories] = useState(
-        params.getAll('category').filter(category => categories.includes(category))
+    // The URL is the source of truth, so Back, Forward and shared links all work.
+    const urlQuery = params.get('q') ?? '';
+    const selectedCategories = useMemo(
+        () => params.getAll('category').filter(category => categories.includes(category)),
+        [params]
     );
-    const [selectedLevels, setSelectedLevels] = useState([]);
+    const selectedLevels = useMemo(
+        () => params.getAll('level').filter(level => levels.includes(level)),
+        [params]
+    );
+
+    const [query, setQuery] = useState(urlQuery);
+    const [syncedQuery, setSyncedQuery] = useState(urlQuery);
     const [pageState, setPageState] = useState({ key: '', size: PAGE_SIZE });
 
-    const debouncedQuery = useDebouncedValue(query, 400);
-    const isPending = query !== debouncedQuery;
+    // The URL changed from outside this page (Back button, a nav link): adopt it.
+    if (urlQuery !== syncedQuery) {
+        setSyncedQuery(urlQuery);
+        setQuery(urlQuery);
+    }
+
+    useEffect(() => () => clearTimeout(writeTimer.current), []);
+
+    // Typing has settled: write it to the URL (replace, so Back does not step through keystrokes).
+    const handleQueryChange = event => {
+        const value = event.target.value;
+        setQuery(value);
+        clearTimeout(writeTimer.current);
+        writeTimer.current = setTimeout(() => {
+            setSyncedQuery(value);
+            setParams(previous => {
+                const next = new URLSearchParams(previous);
+                if (value) next.set('q', value);
+                else next.delete('q');
+                return next;
+            }, { replace: true });
+        }, 400);
+    };
+
+    const toggleParam = (name, value) => {
+        setParams(previous => {
+            const next = new URLSearchParams(previous);
+            const current = next.getAll(name);
+            next.delete(name);
+            const updated = current.includes(value) ? current.filter(item => item !== value) : [...current, value];
+            updated.forEach(item => next.append(name, item));
+            return next;
+        }, { replace: true });
+    };
+
+    const isPending = query !== urlQuery;
 
     const results = useMemo(
-        () => filterCourses(coursesData, { query: debouncedQuery, categories: selectedCategories, levels: selectedLevels }),
-        [debouncedQuery, selectedCategories, selectedLevels]
+        () => filterCourses(coursesData, { query: urlQuery, categories: selectedCategories, levels: selectedLevels }),
+        [urlQuery, selectedCategories, selectedLevels]
     );
 
-    const filterKey = `${debouncedQuery}|${selectedCategories.join(',')}|${selectedLevels.join(',')}`;
+    const filterKey = `${urlQuery}|${selectedCategories.join(',')}|${selectedLevels.join(',')}`;
     const size = pageState.key === filterKey ? pageState.size : PAGE_SIZE;
     const visible = useMemo(() => results.slice(0, size), [results, size]);
     const hasMore = results.length > visible.length;
@@ -66,9 +108,10 @@ export default function SearchPage() {
     };
 
     const clearAll = () => {
+        clearTimeout(writeTimer.current);
         setQuery('');
-        setSelectedCategories([]);
-        setSelectedLevels([]);
+        setSyncedQuery('');
+        setParams(new URLSearchParams(), {replace: true});
         searchRef.current?.focus();
     };
 
@@ -86,7 +129,7 @@ export default function SearchPage() {
                             <p id="search-hint" className="hint">Searches titles, descriptions and topics. Results update as you type.</p>
                             <input
                                 id="resource-search" ref={searchRef} type="search" value={query}
-                                onChange={event => setQuery(event.target.value)}
+                                onChange={handleQueryChange}
                                 aria-describedby="search-hint"
                             />
                         </div>
@@ -100,14 +143,14 @@ export default function SearchPage() {
                             <ToggleGroup
                                 legend="Category" options={categories}
                                 selected={selectedCategories}
-                                onToggle={category => setSelectedCategories(current => toggleItem(current, category))}
+                                onToggle={category => toggleParam('category', category)}
                             />
                         </FilterAccordion>
                         <FilterAccordion title="Level">
                             <ToggleGroup
                                 legend="Level" options={levels}
                                 selected={selectedLevels}
-                                onToggle={level => setSelectedLevels(current => toggleItem(current, level))}
+                                onToggle={level => toggleParam('level', level)}
                             />
                         </FilterAccordion>
 
