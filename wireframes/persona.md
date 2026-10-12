@@ -42,11 +42,11 @@
 
 ### Secondary setup (phone, on the move)
 
-| Layer          | Configuration                                                                       |
-| -------------- | ----------------------------------------------------------------------------------- |
-| Device         | Samsung Galaxy A17                                                                  |
-| Screen reader  | **VoiceOver** with Chrome                                                           |
-| Navigation     | Rotor set to *Headings* and *Landmarks*; swipe navigation; Braille screen input off |
+| Layer          | Configuration                                                                          |
+| -------------- | -------------------------------------------------------------------------------------- |
+| Device         | Samsung Galaxy A17                                                                     |
+| Screen reader  | **TalkBack** with Chrome                                                               |
+| Navigation     | Reading controls set to *Headings* and *Landmarks*; swipe navigation; Braille keyboard off |
 
 ### Input modalities
 
