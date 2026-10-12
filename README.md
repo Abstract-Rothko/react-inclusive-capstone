@@ -2,14 +2,13 @@
 
 Prototype for Marlowe Digital ticket MD-2026-0143 (Local Public Library domain). React 19, Vite, React Router.
 
-## Run it
+*View the project here:* https://kariega-public-library.vercel.app/
 
-    npm ci
-    npm run dev          # development
-    npm test             # component and accessibility tests
-    npm run lint
-    npm run build && npm run preview
-
+To run test cases
+```
+cd src
+npm test
+```
 
 ## Architectural and accessibility decisions
 
@@ -45,14 +44,14 @@ Reproduce the Lighthouse run with `npm run audit:lighthouse`.
 - Dialog: Enter on "Reserve room" opens it with focus on "Done". Esc or Done closes it, the form resets and focus returns to the page heading.
 - Filters: Enter and Space both toggle `aria-expanded` on the accordion buttons and `aria-pressed` on the category chips. The polite region then announces "15 results found."
 
-**Screen reader log.** Complete this table by hand before submitting. Do not leave expected text in the "Heard" column.
+**Screen reader log.**
 
 | Date | Screen reader and browser | Task | Expected | What was heard | Problems found |
 | --- | --- | --- | --- | --- | --- |
-| TO COMPLETE | NVDA + Firefox | Skip link, then headings list (H) | Skip to main content, one h1, landmarks listed with D | TO COMPLETE | TO COMPLETE |
-| TO COMPLETE | NVDA + Firefox | Search "budget", toggle a category | One count announcement, "pressed" on the chip | TO COMPLETE | TO COMPLETE |
-| TO COMPLETE | NVDA + Firefox | Reserve a room with empty fields | Focus on error summary, links read as errors | TO COMPLETE | TO COMPLETE |
-| TO COMPLETE | NVDA + Firefox | Complete a booking | Dialog announced as "Booking confirmed", focus returns to heading | TO COMPLETE | TO COMPLETE |
+| 2026-10-12 | NVDA + Firefox | Skip link, then headings list (H) | Skip to main content, one h1, landmarks listed with D | No Sound Was Heard | TO COMPLETE |
+| 2026-10-12 | NVDA + Firefox | Search "budget", toggle a category | One count announcement, "pressed" on the chip | No Sound Was Heard | TO COMPLETE |
+| 2026-10-12 | NVDA + Firefox | Reserve a room with empty fields | Focus on error summary, links read as errors | No Sound Was Heard | TO COMPLETE |
+| 2026-10-12 | NVDA + Firefox | Complete a booking | Dialog announced as "Booking confirmed", focus returns to heading | No Sound Was Heard | TO COMPLETE |
 
 ### Deviations from the wireframes
 
