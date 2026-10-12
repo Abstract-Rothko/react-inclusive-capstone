@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -11,7 +14,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "oxlint && vitest run && vite build"
+    "check": "oxlint && vitest run && vite build",
+   "audit:lighthouse": "node scripts/lighthouse.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

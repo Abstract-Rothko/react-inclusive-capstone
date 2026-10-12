@@ -11,8 +11,6 @@ import ResultCard from '../components/search/ResultCard';
 const PAGE_SIZE = 12;
 const levels = ['Beginner', 'Intermediate'];
 
-// const toggleItem = (list, item) => (list.includes(item) ? list.filter(entry => entry !== item) : [...list, item]);
-
 export default function SearchPage() {
     const headingRef = usePageHeading('Courses and archive');
     const announce = useAnnouncer();
