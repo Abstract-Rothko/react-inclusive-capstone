@@ -5,7 +5,7 @@ export default function EventCard({ event, headingLevel: Heading = 'h3' }) {
     const headingId = `event-${event.id}`;
 
     return (
-        <article className="card" aria-labelledby={headingId}>
+        <article className="card card--event" aria-labelledby={headingId}>
             <Heading id={headingId}>{event.title}</Heading>
             <p className="meta">
                 <time dateTime={`${event.date}T${event.startTime}`}>{formatDate(event.date)}, {event.startTime}</time>
