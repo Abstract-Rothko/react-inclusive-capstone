@@ -8,7 +8,7 @@ import RadioGroup from "../forms/RadioGroup";
 import CheckboxGroup from "../forms/CheckboxGroup";
 import ErrorSummary from "../forms/ErrorSummary";
 import ConfirmDialog from "../forms/ConfirmDialog";
-import { validateRegistration } from "../events/validate";
+import { validateBooking } from "./validate";
 
 const peopleOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 
@@ -29,7 +29,7 @@ export default function BookingForm({ headingRef }) {
             needs: [],
             notes: ''
         },
-        validate: validateRegistration,
+        validate: validateBooking,
         onValid: values => setConfirmed(values)
     });
 
