@@ -15,7 +15,7 @@ const peopleOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 export default function BookingForm({ headingRef }) {
     const [params] = useSearchParams();
     const [confirmed, setConfirmed] = useState(null);
-    const today = new Date();
+    const [today] = useState(() => new Date());
 
     const form = useAccessibleForm({
         initialValues: {
@@ -33,7 +33,7 @@ export default function BookingForm({ headingRef }) {
         onValid: values => setConfirmed(values)
     });
 
-    const { values, fieldError, handleChange, handleBlur } = form;
+    const { values, fieldError, handleChange, handleBlur, summaryRef } = form;
     const selectedRoom = findRoom(values.room);
     const capacityHint = selectedRoom
         ? `${selectedRoom.name} seats up to ${selectedRoom.capacity} people.`
@@ -49,7 +49,7 @@ export default function BookingForm({ headingRef }) {
 
     return (
         <>
-            {form.showSummary && <ErrorSummary ref={form.summaryRef} errors={form.errorList} subject="booking" />}
+            {form.showSummary && <ErrorSummary ref={summaryRef} errors={form.errorList} subject="booking" />}
 
             <p>Fields marked <span className="required">(required)</span> must be completed.</p>
 

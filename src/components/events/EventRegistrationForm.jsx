@@ -17,7 +17,7 @@ export default function EventRegistrationForm({ event, headingRef }) {
         onValid: values => setConfirmed(values)
     });
 
-    const { values, fieldError, handleChange, handleBlur } = form;
+    const { values, fieldError, handleChange, handleBlur, summaryRef } = form;
 
     const closeDialog = () => {
         setConfirmed(null);
@@ -27,7 +27,7 @@ export default function EventRegistrationForm({ event, headingRef }) {
 
     return (
         <>
-            {form.showSummary && <ErrorSummary ref={form.summaryRef} errors={form.errorList} subject="registration" />}
+            {form.showSummary && <ErrorSummary ref={summaryRef} errors={form.errorList} subject="registration" />}
 
             <p>Fields marked <span className="required">(required)</span> must be completed.</p>
 
