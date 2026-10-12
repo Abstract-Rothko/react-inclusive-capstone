@@ -60,3 +60,34 @@ Reproduce the Lighthouse run with `npm run audit:lighthouse`.
 - **Filters and paging.** The wireframe filtered by format and accessibility and had numbered pagination and a sort control. The dataset has no format field, so the prototype filters by category and level and uses a "Show more" button that moves focus to the first new result.
 - **Capacity.** Room capacities follow `src/data/rooms.js` (4, 6 and 12), which is the source of truth.
 - **Topics.** The wireframe topic names were placeholders. The prototype uses the eight categories in the dataset.
+
+
+## Screenshots
+
+### 80 Test-Cases Passed
+
+![Screenshot of test-cases passing](screenshots/tests-passing.png)
+
+### Home Page
+
+![Screenshot of the home page](screenshots/home-page.png)
+
+#### Courses and Digital Archive
+
+![Screenshot of the seach page: courses and the digital archive](screenshots/courses-page.png)
+
+#### Reserve a Room
+
+![Screenshot of the reservations page: reserve a room](screenshots/reserve-page.png)
+
+#### Events
+
+![Screenshot of the events page](screenshots/events-page.png)
+
+#### Course Details
+
+![Screenshot of course details](screenshots/course-details-page.png)
+
+#### Register for an Event
+
+![Screenshot of registering for an event](screenshots/registration-details-page.png)
