@@ -54,6 +54,20 @@
     margin-bottom: 0;
 }
 
+.grid > li > .card,
+.results > li > .card {
+    height: 100%;
+}
+
+.card--event {
+    display: flex;
+    flex-direction: column;
+}
+
+.card--event > :last-child {
+    margin-top: auto;
+}
+
 .card--link {
     padding: 0;
 }
