@@ -39,7 +39,7 @@ export default function SearchPage() {
 
     const filterKey = `${debouncedQuery}|${selectedCategories.join(',')}|${selectedLevels.join(',')}`;
     const size = pageState.key === filterKey ? pageState.size : PAGE_SIZE;
-    const visible = results.slice(0, size);
+    const visible = useMemo(() => results.slice(0, size), [results, size]);
     const hasMore = results.length > visible.length;
     const hasFilters = query !== '' || selectedCategories.length > 0 || selectedLevels.length > 0;
 
@@ -124,7 +124,7 @@ export default function SearchPage() {
                     <p className="results-count">{describeCount(visible.length, results.length)}</p>
 
                     {results.length === 0 ? (
-                        <p>No resources match. Try a different word or clear the filters.</p>
+                        <p>Try a different word, or clear the filters to see everything.</p>
                     ) : (
                         <ul className="results" role="list">
                             {visible.map(course => (
